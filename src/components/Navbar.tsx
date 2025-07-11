@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const routes = [
@@ -17,11 +18,27 @@ export default function Navbar() {
 
   const pathname = usePathname();
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // cek awal
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const headerClass = `w-full shadow-20 mb-8 transition-all duration-300 ${
+    scrolled ? "bg-input fixed top-0 z-50" : "bg-input fixed top-0 z-50"
+  }`;
+
   return (
-    <header className="w-full bg-slate-50 shadow-20 mb-10">
+    <header className={headerClass}>
       <div className="flex justify-between mx-auto container  items-center py-6 text-lg">
         <div>
-          <h1 className="font-bold">MyAnimeList</h1>
+          <h1 className="font-bold text-primary">MyAnimeList</h1>
         </div>
         <nav>
           <ul className="flex gap-7">
@@ -32,7 +49,7 @@ export default function Navbar() {
                   className={
                     pathname === route.href ||
                     (route.href !== "/" && pathname.startsWith(route.href))
-                      ? "text-orange-500 font-semibold"
+                      ? "text-primary font-semibold"
                       : "text-muted-foreground"
                   }
                 >

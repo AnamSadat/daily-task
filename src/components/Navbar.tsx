@@ -10,8 +10,8 @@ export default function Navbar() {
       label: "Home",
     },
     {
-      href: "/story",
-      label: "Story",
+      href: "/anime",
+      label: "Anime",
     },
     {
       href: "/about",

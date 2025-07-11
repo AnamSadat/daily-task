@@ -1,24 +1,27 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Anime } from "@/type/type";
 
 type CardProps = {
-  link: string;
+  anime: Anime;
 };
 
-export default function Card({ link }: CardProps) {
+export default function Card({ anime }: CardProps) {
   return (
-    <div className="">
+    <div className="p-4 border-2 border-blue-700 rounded-2xl">
       <div>
         <Image
-          src={link}
-          alt="saya"
-          width={400}
-          height={500}
+          src={anime.images.jpg.image_url}
+          alt={anime.title}
+          width={350}
+          height={400}
           className="rounded-2xl"
         />
       </div>
-      <h1>Judul</h1>
-      <Link href={"/"}>Load more...</Link>
+      <div className="items-start justify-start">
+        <h1>{anime.title}</h1>
+        <Link href={`/anime/${anime.mal_id}`}>Load more...</Link>
+      </div>
     </div>
   );
 }

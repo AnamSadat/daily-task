@@ -11,8 +11,8 @@ export default async function Story() {
 
   return (
     <div className="text-center container mx-auto gap-2 mt-30">
-      <h1 className="text-4xl mb-5">Anime</h1>
-      <div className="grid grid-cols-5 mx-auto gap-5">
+      <h1 className="text-4xl mb-7 font-semibold">Anime List</h1>
+      <div className="grid mx-auto lg:grid-cols-5  gap-5 md:grid-cols-3">
         {animeList.map((anime) => (
           <AnimeCard key={anime.mal_id} anime={anime} />
         ))}

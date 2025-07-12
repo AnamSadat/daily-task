@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function Navbar() {
   const routes = [
@@ -38,7 +39,14 @@ export default function Navbar() {
     <header className={headerClass}>
       <div className="flex justify-between mx-auto container  items-center py-6 text-lg">
         <div>
-          <h1 className="font-bold text-primary">MyAnimeList</h1>
+          <Link href={"/"}>
+            <Image
+              src={"/anime-logo.png"}
+              alt="logo anime"
+              width={85}
+              height={100}
+            />
+          </Link>
         </div>
         <nav>
           <ul className="flex gap-7">

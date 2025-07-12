@@ -17,7 +17,7 @@ type CardProps = {
 export default function AnimeCard({ anime }: CardProps) {
   return (
     <div>
-      <Card className="transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg bg-slate-100">
+      <Card className="transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg bg-white">
         <Link href={`/anime/${anime.mal_id}`} className="">
           <CardHeader className="flex items-center justify-center">
             <Image

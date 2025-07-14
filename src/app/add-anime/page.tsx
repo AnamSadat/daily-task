@@ -17,9 +17,9 @@ export default function AddAnime() {
         <div>
           <DialogComponents />
         </div>
-        <div className="mt-20">
-          <ListAnime />
-        </div>
+      </div>
+      <div className="mt-20">
+        <ListAnime />
       </div>
     </div>
   );

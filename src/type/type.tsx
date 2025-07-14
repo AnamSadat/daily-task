@@ -1,3 +1,7 @@
+export type CardProps = {
+  anime: MyAnime;
+};
+
 export type AnimeDetailProps = {
   params: {
     id: string;
@@ -20,4 +24,15 @@ export type Anime = {
       large_image_url: string;
     };
   };
+};
+
+export type MyAnime = {
+  id: number;
+  nama: string;
+  status: string;
+  skor: number;
+  durasi: string;
+  genre: string;
+  img_url: string;
+  deskripsi: string;
 };

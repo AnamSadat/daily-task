@@ -1,37 +1,35 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Anime } from "@/type/type";
+import { CardProps } from "@/type/type";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardContent,
   CardFooter,
+  CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
-type CardProps = {
-  anime: Anime;
-};
 
 export default function CardListAnime({ anime }: CardProps) {
   return (
     <div>
       <Card className="transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg bg-white">
-        <Link href={`/anime/${anime.mal_id}`} className="">
+        <Link href={`/anime/${anime.id}`} className="">
           <CardHeader className="flex items-center justify-center">
             <Image
-              src={anime.images.webp.large_image_url}
-              alt={anime.title}
+              src={anime.img_url}
+              alt={anime.nama}
               width={300}
               height={500}
               className="rounded-xl object-cover max-h-40 mb-5"
             />
           </CardHeader>
-          <CardContent>
-            <CardTitle className="text-base mb-3 line-clamp-2 h-12">
-              {anime.title}
-            </CardTitle>
+          <CardContent className="">
+            <CardTitle className="text-base">{anime.nama}</CardTitle>
+            <CardDescription className=" mb-3 line-clamp-2 h-12 text-sm">
+              {anime.genre}
+            </CardDescription>
           </CardContent>
           <CardFooter className="flex items-center justify-center">
             <Button variant="custom" className="hover:cursor-pointer w-full">

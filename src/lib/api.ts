@@ -9,3 +9,9 @@ export async function getAnimeDetail(id: string) {
   const { data } = await res.json()
   return data
 }
+
+export async function getMyAnime() {
+  const res = await fetch('/api/anime')
+  const { anime } = await res.json()
+  return anime
+}

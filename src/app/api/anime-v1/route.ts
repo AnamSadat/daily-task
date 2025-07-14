@@ -3,6 +3,6 @@ import { anime } from "@/lib/data"
 
 // TODO: api anime
 
-export default async function GET() {
-  return Response.json(anime)
+export async function GET() {
+  return Response.json(anime, { status: 200 })
 }

@@ -1,17 +1,16 @@
 "use client";
 
-import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { anime } from "@/lib/data";
+import CardListAnime from "./CardListAnime";
 
 // TODO: List Anime
 
 export default function ListAnime() {
   // Dummy data
-  const [animes, setAnimes] = useState(anime);
 
   // Jika data kosong
-  if (animes.length === 0) {
+  if (anime.length === 0) {
     return (
       <Card className="p-7 items-center flex flex-col bg-slate-50 space-y-2">
         <svg
@@ -31,13 +30,11 @@ export default function ListAnime() {
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold">Daftar Anime</h2>
-      {animes.map((anime) => (
-        <Card key={anime.id} className="p-5 bg-white shadow">
-          <h3 className="text-xl font-semibold">{anime.title}</h3>
-          <p>Status: {anime.status}</p>
-          <p>Skor: {anime.score}</p>
-        </Card>
-      ))}
+      <div className="grid mx-auto lg:grid-cols-5  gap-5 md:grid-cols-3">
+        {anime.map((anime) => (
+          <CardListAnime key={anime.id} anime={anime} />
+        ))}
+      </div>
     </div>
   );
 }

@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
 
 
   images: {
-    domains: ['cdn.myanimelist.net'], // ✅ tambahkan ini
+    domains: ['cdn.myanimelist.net', '4kwallpapers.com', 'img.icons8.com'], // ✅ tambahkan ini
   },
 };
 

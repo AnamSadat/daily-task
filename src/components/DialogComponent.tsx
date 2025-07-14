@@ -12,7 +12,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "./ui/textarea";
-import DropFile from "./ui/dropfile";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function DialogComponents() {
   return (
@@ -28,7 +29,9 @@ export default function DialogComponents() {
         </DialogTrigger>
         <DialogContent className=" sm:max-w-[625px] max-h-[645px] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Tambah Anime</DialogTitle>
+            <DialogTitle className="text-xl font-semibold">
+              Tambah Anime
+            </DialogTitle>
             <DialogDescription>
               Mulai atur koleksimu, kelola sekarang!
             </DialogDescription>
@@ -63,22 +66,44 @@ export default function DialogComponents() {
               />
             </div>
             <div className="grid gap-3">
+              <Label htmlFor="username-1">URL image</Label>
+              <p className="text-sm text-zinc-600 flex">
+                <Image
+                  width="18"
+                  height="10"
+                  src="https://img.icons8.com/emoji/48/warning-emoji.png"
+                  alt="warning-emoji"
+                />{" "}
+                &nbsp; Kami rekomendasikan dari &nbsp;
+                <Link
+                  href={"https://4kwallpapers.com/"}
+                  target="_blank"
+                  className="text-blue-500 underline underline-offset-1"
+                >
+                  4kwallpapers.com
+                </Link>{" "}
+                &nbsp; agar gambar berjalan dengan baik
+              </p>
+              <Input
+                id="username-1"
+                name="username"
+                placeholder="https://4kwallpapers.com/images/walls/thumbs_3t/23027.jpg"
+              />
+            </div>
+            <div className="grid gap-3">
               <Label htmlFor="username-1">Deskripsi</Label>
               <Textarea
                 id="username-1"
                 name="username"
-                placeholder="Actions, Romance, Comedy"
+                placeholder="Deskripsikan animemu"
               />
-            </div>
-            <div className="grid gap-3">
-              <DropFile />
             </div>
           </div>
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Save changes</Button>
+            <Button type="submit">Save Anime</Button>
           </DialogFooter>
         </DialogContent>
       </form>

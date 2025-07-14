@@ -15,6 +15,10 @@ export default function Navbar() {
       href: "/anime",
       label: "Anime",
     },
+    {
+      href: "/add-anime",
+      label: "Add Anime",
+    },
   ];
 
   const pathname = usePathname();
@@ -57,7 +61,7 @@ export default function Navbar() {
                   className={
                     pathname === route.href ||
                     (route.href !== "/" && pathname.startsWith(route.href))
-                      ? "text-primary font-semibold"
+                      ? "text-primary font-bold"
                       : "text-muted-foreground"
                   }
                 >

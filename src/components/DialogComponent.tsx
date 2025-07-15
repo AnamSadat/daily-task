@@ -11,6 +11,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+
+import { HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
@@ -19,6 +21,7 @@ import { useState } from "react";
 import { NewAnimeInput } from "@/type/type";
 import { postNewAnime } from "@/lib/api";
 import Swal from "sweetalert2";
+import { HoverCard } from "./ui/hover-card";
 
 export default function DialogComponents({
   onSuccess = () => {},
@@ -145,7 +148,7 @@ export default function DialogComponents({
             </div>
             <div className="grid gap-3">
               <Label htmlFor="img_url">URL image</Label>
-              <p className="text-sm text-zinc-600 flex">
+              <div className="text-sm text-zinc-600 flex items-center ">
                 <Image
                   width="18"
                   height="10"
@@ -160,8 +163,8 @@ export default function DialogComponents({
                 >
                   4kwallpapers.com
                 </Link>{" "}
-                &nbsp; agar gambar berjalan dengan baik
-              </p>
+                , agar berjalan dengan baik
+              </div>
               <Input
                 id="img_url"
                 name="img_url"
@@ -173,6 +176,35 @@ export default function DialogComponents({
             </div>
           </div>
           <DialogFooter>
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <Button variant="link">Hover me for tutorial</Button>
+              </HoverCardTrigger>
+              <HoverCardContent className="w-80">
+                <div className="flex justify-between gap-4">
+                  <div className="space-y-1">
+                    <h4 className="text-sm font-semibold">
+                      Tutorial dapetin URL gambar
+                    </h4>
+                    <p className="text-sm">
+                      1. Buka website{" "}
+                      <Link
+                        href={"https://4kwallpapers.com/"}
+                        target="_blank"
+                        className="text-blue-500 underline underline-offset-1"
+                      >
+                        4kwallpapers.com
+                      </Link>{" "}
+                    </p>
+                    <p className="text-sm">2. Cari dan pilih gambar</p>
+                    <p className="text-sm">
+                      3. Kemudian klik kanan pilih {`"Open image in new tab"`}
+                    </p>
+                    <p className="text-sm">4. Copy link dan tempelkan disini</p>
+                  </div>
+                </div>
+              </HoverCardContent>
+            </HoverCard>
             <DialogClose asChild>
               <Button variant="outline" className="cursor-pointer">
                 Cancel

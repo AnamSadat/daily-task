@@ -33,6 +33,12 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import Link from "next/link";
@@ -57,18 +63,10 @@ export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
 
   const handleDelete = async () => {
     setIsDelete(true);
-    const res = await deleteNewAnime(id);
-    onSuccess(); // PANGGIL FETCH DI SINI!
-
-    console.log("Item deleted!", res);
-    setDeleteOpen(false);
+    await deleteNewAnime(id);
+    setIsDelete(false);
+    setDeleteOpen(false); // 🔑 Triger onOpenChange
     setMenuOpen(false);
-
-    Swal.fire({
-      title: "Success",
-      text: "Anime berhasil ditambahkan!",
-      icon: "success",
-    });
   };
 
   const handleEdit = async (e: React.FormEvent) => {
@@ -251,6 +249,35 @@ export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
             </div>
           </div>
           <DialogFooter>
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <Button variant="link">Hover me for tutorial</Button>
+              </HoverCardTrigger>
+              <HoverCardContent className="w-80">
+                <div className="flex justify-between gap-4">
+                  <div className="space-y-1">
+                    <h4 className="text-sm font-semibold">
+                      Tutorial dapetin URL gambar
+                    </h4>
+                    <p className="text-sm">
+                      1. Buka website{" "}
+                      <Link
+                        href={"https://4kwallpapers.com/"}
+                        target="_blank"
+                        className="text-blue-500 underline underline-offset-1"
+                      >
+                        4kwallpapers.com
+                      </Link>{" "}
+                    </p>
+                    <p className="text-sm">2. Cari dan pilih gambar</p>
+                    <p className="text-sm">
+                      3. Kemudian klik kanan pilih {`"Open image in new tab"`}
+                    </p>
+                    <p className="text-sm">4. Copy link dan tempelkan disini</p>
+                  </div>
+                </div>
+              </HoverCardContent>
+            </HoverCard>
             <DialogClose asChild className="">
               <Button
                 onClick={() => setMenuOpen(false)}

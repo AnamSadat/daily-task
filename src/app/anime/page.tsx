@@ -4,6 +4,7 @@ import type { Anime } from "@/type/type";
 
 export default async function Story() {
   const animeList: Anime[] = await getAnimeList();
+
   console.log(
     "ID anime list yang tersedia: ",
     animeList.map((a) => a.mal_id)

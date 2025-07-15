@@ -8,7 +8,7 @@ export default function Footer() {
           &copy; {new Date().getFullYear()}{" "}
           <span className="font-semibold">Anam Sadat. All right reversed</span>
         </h1>
-        <h1 className=" py-2">Connect me with:</h1>
+        <h1 className=" py-2">Connect with me:</h1>
         <div className="flex justify-center gap-3">
           <div>
             <Link

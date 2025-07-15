@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { DropdownMenuDemo } from "@/components/Dropdown";
 
-export default function CardListAnime({ anime }: CardProps) {
+export default function CardListAnime({ anime, onSuccess }: CardProps) {
   return (
     <div>
       <Card className="transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg bg-white">
@@ -25,12 +25,18 @@ export default function CardListAnime({ anime }: CardProps) {
         </CardHeader>
         <CardContent className="">
           <CardTitle className="text-base">{anime.nama}</CardTitle>
+          <CardDescription className=" line-clamp-2  text-sm">
+            <span className="font-semibold">Rating</span> : {anime.skor}
+          </CardDescription>
+          <CardDescription className=" line-clamp-2  text-sm">
+            <span className="font-semibold">Status</span> : {anime.status}
+          </CardDescription>
           <CardDescription className=" mb-3 line-clamp-2 h-12 text-sm">
-            {anime.genre}
+            <span className="font-semibold">Genre</span> : {anime.genre}
           </CardDescription>
         </CardContent>
         <CardFooter className="flex items-center justify-center ">
-          <DropdownMenuDemo />
+          <DropdownMenuDemo id={anime.id} onSuccess={onSuccess} anime={anime} />
         </CardFooter>
       </Card>
     </div>

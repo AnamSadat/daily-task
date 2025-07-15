@@ -1,13 +1,28 @@
 import { z } from "zod";
 
 export type CardProps = {
-  anime: NewAnime;
+  anime: NewAnime,
+  onSuccess: () => void
 };
 
 export type AnimeDetailProps = {
   params: {
     id: string;
   };
+};
+
+export type DropdownProps = {
+  id: number,
+  onSuccess: () => void,
+  anime: NewAnime
+}
+
+export type AnimeFormState = {
+  nama: string;
+  status: string;
+  skor: string;  // <== string!
+  genre: string;
+  img_url: string;
 };
 
 // types/anime.ts
@@ -31,7 +46,7 @@ export type Anime = {
 export const NewAnimeSchema = z.object({
   nama: z.string(),
   status: z.string(),
-  skor: z.number(),
+  skor: z.number().max(10),
   genre: z.string(),
   img_url: z.string(),
 });

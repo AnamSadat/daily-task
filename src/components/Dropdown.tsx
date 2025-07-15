@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -37,22 +37,78 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import Link from "next/link";
 import Image from "next/image";
+import { deleteNewAnime, putNewAnime } from "@/lib/api";
+import { DropdownProps, NewAnime } from "@/type/type";
+import Swal from "sweetalert2";
 
-export function DropdownMenuDemo() {
+export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
+  const [formData, setFormData] = useState<NewAnime>({
+    id: anime.id,
+    nama: anime.nama,
+    status: anime.status,
+    skor: anime.skor,
+    genre: anime.genre,
+    img_url: anime.img_url,
+  });
 
-  const handleDelete = () => {
-    console.log("Item deleted!");
+  const handleDelete = async () => {
+    setIsDelete(true);
+    const res = await deleteNewAnime(id);
+    onSuccess(); // PANGGIL FETCH DI SINI!
+
+    console.log("Item deleted!", res);
     setDeleteOpen(false);
     setMenuOpen(false);
+
+    Swal.fire({
+      title: "Success",
+      text: "Anime berhasil ditambahkan!",
+      icon: "success",
+    });
   };
 
-  const handleEdit = () => {
+  const handleEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await putNewAnime(formData);
+      console.log("Sukses tambah anime: ", res);
+
+      Swal.fire({
+        title: "Success",
+        text: "Anime berhasil ditambahkan!",
+        icon: "success",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          onSuccess(); // PANGGIL FETCH DI SINI!
+        }
+      });
+    } catch (error) {
+      console.error("handleSubmit Error: ", error);
+      Swal.fire({
+        title: "Gagal",
+        text: "Gagal menambahkan anime",
+        icon: "error",
+      });
+    }
     console.log("Item edited!");
     setEditOpen(false);
     setMenuOpen(false);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === "skor") {
+      setFormData({
+        ...formData,
+        [name]: value === "" ? 0 : parseFloat(value),
+      });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   return (
@@ -77,7 +133,15 @@ export function DropdownMenuDemo() {
               }}
             >
               Edit
-              <DropdownMenuShortcut>✏️</DropdownMenuShortcut>
+              <DropdownMenuShortcut>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  style={{ width: 12, height: 12 }}
+                >
+                  <path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160L0 416c0 53 43 96 96 96l256 0c53 0 96-43 96-96l0-96c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7-14.3 32-32 32L96 448c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 64z" />
+                </svg>
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
 
@@ -91,7 +155,18 @@ export function DropdownMenuDemo() {
               }}
             >
               Delete
-              <DropdownMenuShortcut>🗑️</DropdownMenuShortcut>
+              <DropdownMenuShortcut>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 448 512"
+                  style={{ width: 12, height: 12 }}
+                >
+                  <path
+                    d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z "
+                    fill="#ef4444"
+                  />
+                </svg>
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
@@ -108,14 +183,87 @@ export function DropdownMenuDemo() {
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-3">
-              <Label htmlFor="name-1">Nama Anime</Label>
-              <Input id="name-1" name="name" placeholder="Naruto Shippuden" />
+              <Label htmlFor="nama">Nama Anime</Label>
+              <Input
+                id="nama"
+                name="nama"
+                placeholder="Naruto Shippuden"
+                value={formData.nama}
+                onChange={handleChange}
+              />
             </div>
-            {/* Tambah input lain... */}
+            <div className="grid gap-3">
+              <Label htmlFor="status">Status</Label>
+              <Input
+                id="status"
+                name="status"
+                placeholder="Ongoing, Completed, "
+                value={formData.status}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="grid gap-3">
+              <Label htmlFor="skor">Skor {"(1-10)"}</Label>
+              <Input
+                id="skor"
+                name="skor"
+                placeholder="9.5, 9"
+                value={formData.skor}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="grid gap-3">
+              <Label htmlFor="genre">Genre</Label>
+              <Input
+                id="genre"
+                name="genre"
+                placeholder="Actions, Romance, Comedy"
+                value={formData.genre}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="grid gap-3">
+              <Label htmlFor="img_url">URL image</Label>
+              <p className="text-sm text-zinc-600 flex">
+                <Image
+                  width="18"
+                  height="10"
+                  src="https://img.icons8.com/emoji/48/warning-emoji.png"
+                  alt="warning-emoji"
+                />{" "}
+                &nbsp; Kami rekomendasikan dari &nbsp;
+                <Link
+                  href={"https://4kwallpapers.com/"}
+                  target="_blank"
+                  className="text-blue-500 underline underline-offset-1"
+                >
+                  4kwallpapers.com
+                </Link>{" "}
+                &nbsp; agar gambar berjalan dengan baik
+              </p>
+              <Input
+                id="img_url"
+                name="img_url"
+                placeholder="https://4kwallpapers.com/images/walls/thumbs_3t/23027.jpg"
+                value={formData.img_url}
+                onChange={handleChange}
+              />
+            </div>
           </div>
           <DialogFooter>
-            <DialogClose asChild>
-              <Button onClick={handleEdit}>Save</Button>
+            <DialogClose asChild className="">
+              <Button
+                onClick={() => setMenuOpen(false)}
+                className="cursor-pointer"
+                variant={"outline"}
+              >
+                Cancel
+              </Button>
+            </DialogClose>
+            <DialogClose asChild className="">
+              <Button onClick={handleEdit} className="cursor-pointer">
+                Save
+              </Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
@@ -125,18 +273,23 @@ export function DropdownMenuDemo() {
       <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>Benar mau hapus?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              item.
+              Ini akan menghapus permanen daftar favorite.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setMenuOpen(false)}>
+            <AlertDialogCancel
+              onClick={() => setMenuOpen(false)}
+              className="cursor-pointer"
+            >
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>
-              Yes, delete
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="bg-red-500 hover:bg-red-400 cursor-pointer"
+            >
+              {isDelete ? "Deleting..." : "Yes, delete"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

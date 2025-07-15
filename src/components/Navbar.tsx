@@ -16,8 +16,8 @@ export default function Navbar() {
       label: "Anime",
     },
     {
-      href: "/add-anime",
-      label: "Add Anime",
+      href: "/favorite",
+      label: "Favorite",
     },
   ];
 

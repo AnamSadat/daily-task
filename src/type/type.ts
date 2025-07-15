@@ -32,14 +32,12 @@ export const NewAnimeSchema = z.object({
   nama: z.string(),
   status: z.string(),
   skor: z.number(),
-  durasi: z.number(),
   genre: z.string(),
   img_url: z.string(),
-  deskripsi: z.string(),
 });
 
 // Type input (body dari client)
 export type NewAnimeInput = z.infer<typeof NewAnimeSchema>;
 
 // Type output (data penuh, dipakai di Card, dsb.)
-export type NewAnime = NewAnimeInput & { id: number };
+export type NewAnime = { id: number } & NewAnimeInput;

@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "./ui/textarea";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -54,10 +53,6 @@ export default function DialogComponents() {
               <Input id="username-1" name="username" placeholder="9.5, 9" />
             </div>
             <div className="grid gap-3">
-              <Label htmlFor="username-1">Durasi {"(menit)"}</Label>
-              <Input id="username-1" name="username" placeholder="24 " />
-            </div>
-            <div className="grid gap-3">
               <Label htmlFor="username-1">Genre</Label>
               <Input
                 id="username-1"
@@ -88,14 +83,6 @@ export default function DialogComponents() {
                 id="username-1"
                 name="username"
                 placeholder="https://4kwallpapers.com/images/walls/thumbs_3t/23027.jpg"
-              />
-            </div>
-            <div className="grid gap-3">
-              <Label htmlFor="username-1">Deskripsi</Label>
-              <Textarea
-                id="username-1"
-                name="username"
-                placeholder="Deskripsikan animemu"
               />
             </div>
           </div>

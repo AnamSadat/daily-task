@@ -1,3 +1,5 @@
+
+
 export async function getAnimeList() {
   const res = await fetch('https://api.jikan.moe/v4/anime')
   const { data } = await res.json()
@@ -10,8 +12,23 @@ export async function getAnimeDetail(id: string) {
   return data
 }
 
-export async function getMyAnime() {
-  const res = await fetch('/api/anime')
-  const { anime } = await res.json()
-  return anime
+export async function getNewAnime() {
+  const res = await fetch('/api/anime-v1')
+  if (!res.ok) {
+    throw new Error("Gagal fetch anime")
+  }
+
+  return res.json()
+}
+
+export async function postNewAnime() {
+
+}
+
+export async function putNewAnime() {
+
+}
+
+export async function deleteNewAnime() {
+
 }

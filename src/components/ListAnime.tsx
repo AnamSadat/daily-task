@@ -1,15 +1,43 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
-import { anime } from "@/lib/data";
 import CardListAnime from "./CardListAnime";
+import { useEffect, useState } from "react";
+import { getNewAnime } from "@/lib/api";
+import { NewAnime } from "@/type/type";
+import { Skeleton } from "./ui/skeleton";
 
 // TODO: List Anime
 
 export default function ListAnime() {
-  // Dummy data
+  const [anime, setAnimeState] = useState<NewAnime[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getAnime = async () => {
+      const data = await getNewAnime();
+      setAnimeState(data.data);
+      setLoading(false);
+    };
+    getAnime();
+  }, []);
 
   // Jika data kosong
+  if (loading) {
+    return (
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold">Daftar Anime</h2>
+        <div className="grid mx-auto lg:grid-cols-5 gap-5 md:grid-cols-3">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <Skeleton
+              key={index}
+              className="w-full h-60 rounded-lg bg-slate-200"
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
   if (anime.length === 0) {
     return (
       <Card className="p-7 items-center flex flex-col bg-slate-50 space-y-2">

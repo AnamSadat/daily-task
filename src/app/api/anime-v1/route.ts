@@ -14,7 +14,6 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
-
   const parse = NewAnimeSchema.safeParse(body)
 
   if (!parse.success) {
@@ -22,8 +21,8 @@ export async function POST(req: NextRequest) {
   }
 
   const newAnime: NewAnime = {
+    id: Date.now(),
     ...parse.data,
-    id: Date.now()
   }
 
   anime.push(newAnime)
@@ -34,4 +33,58 @@ export async function POST(req: NextRequest) {
   }
 
   return NextResponse.json(respone)
+}
+
+export async function PUT(req: NextRequest) {
+  const body = await req.json()
+  const { id, ...res } = body
+
+  if (!id) {
+    return NextResponse.json({ error: "ID is required" }, { status: 400 });
+  }
+
+  const parse = NewAnimeSchema.safeParse(res)
+
+  if (!parse.success) {
+    return NextResponse.json({ error: parse.error.format() }, { status: 400 });
+  }
+
+  const index = anime.findIndex((uuid) => uuid.id === id)
+  if (index === -1) {
+    return NextResponse.json({
+      status: 404,
+      error: "Anime not found",
+    })
+  }
+
+  anime[index] = { ...anime[index], ...parse.data }
+  return NextResponse.json({
+    status: 200,
+    data: anime[index]
+  })
+}
+
+export async function DELETE(req: NextRequest) {
+  const body = await req.json()
+  const { id } = body
+
+  if (!id) {
+    return NextResponse.json({ error: "ID is required" }, { status: 400 });
+  }
+
+  const index = anime.findIndex((uuid) => uuid.id === id)
+
+  if (index === -1) {
+    return NextResponse.json({
+      status: 404,
+      error: "Anime not found",
+    })
+  }
+
+  anime.splice(index, 1)
+
+  return NextResponse.json({
+    status: 200,
+    message: `Anime dengan id ${id} berhasil dihapus`
+  })
 }

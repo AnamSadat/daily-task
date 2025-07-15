@@ -12,19 +12,10 @@ export default function AddAnime() {
   const [anime, setAnimeState] = useState<NewAnime[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // AddAnime.tsx
   const fetchAnime = async () => {
-    setLoading(true); // <--- Tambahkan ini di awal
-    try {
-      const data: NewAnime[] = await getNewAnime();
-      console.log("Data berhasil diambil setelah pembaruan/penghapusan:", data); // Verifikasi data
-      setAnimeState(data);
-    } catch (error) {
-      console.error("Kesalahan saat mengambil data anime:", error);
-      // Penting: Tangani error di UI, mungkin tampilkan pesan error
-    } finally {
-      setLoading(false); // <--- Pastikan loading selalu diatur ke false, terlepas dari sukses/gagal
-    }
+    const data: NewAnime[] = await getNewAnime();
+    setAnimeState(data);
+    setLoading(false);
   };
 
   useEffect(() => {

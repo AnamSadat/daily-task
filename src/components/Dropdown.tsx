@@ -63,10 +63,14 @@ export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
 
   const handleDelete = async () => {
     setIsDelete(true);
+    console.log("Deleting anime with ID:", id); // Add this
     await deleteNewAnime(id);
+    console.log("Anime deleted successfully."); // Add this
     setIsDelete(false);
-    setDeleteOpen(false); // 🔑 Triger onOpenChange
+    setDeleteOpen(false);
     setMenuOpen(false);
+    onSuccess();
+    console.log("onSuccess callback executed."); // Add this
   };
 
   const handleEdit = async (e: React.FormEvent) => {
@@ -118,7 +122,12 @@ export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
             className="hover:cursor-pointer w-full"
             asChild
           >
-            <p>Dropdown</p>
+            <p>
+              Dropdown{" "}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
+              </svg>
+            </p>
           </Button>
         </DropdownMenuTrigger>
 
@@ -202,6 +211,9 @@ export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
             </div>
             <div className="grid gap-3">
               <Label htmlFor="skor">Skor {"(1-10)"}</Label>
+              <p className="text-sm text-zinc-600">
+                Jika lebih dari 10 maka gagal *
+              </p>
               <Input
                 id="skor"
                 name="skor"

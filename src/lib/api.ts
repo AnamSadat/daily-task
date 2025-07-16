@@ -1,4 +1,7 @@
+import { NewAnime, NewAnimeInput } from "@/type/type"
 
+
+// fetching anime list
 
 export async function getAnimeList() {
   const res = await fetch('https://api.jikan.moe/v4/anime')
@@ -12,9 +15,9 @@ export async function getAnimeDetail(id: string) {
   return data
 }
 
-import { NewAnime, NewAnimeInput } from "@/type/type"
+// fetching endpoint /api/anime-v1
 
-const BASE_URL_ENDPOINT = '/api/anime-v1'
+const BASE_URL_ENDPOINT = '/api/anime-favorite'
 
 export async function apiFetcher<T>(url: string, options: RequestInit = {}): Promise<T> {
   const res = await fetch(url, options)

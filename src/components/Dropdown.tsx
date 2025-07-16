@@ -60,17 +60,19 @@ export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
     genre: anime.genre,
     img_url: anime.img_url,
   });
+  const [urlError, setUrlError] = useState("");
+  const [skorError, setSkorError] = useState("");
 
   const handleDelete = async () => {
     setIsDelete(true);
-    console.log("Deleting anime with ID:", id); // Add this
+    console.log("Deleting anime with ID:", id);
     await deleteNewAnime(id);
-    console.log("Anime deleted successfully."); // Add this
+    console.log("Anime deleted successfully.");
     setIsDelete(false);
     setDeleteOpen(false);
     setMenuOpen(false);
     onSuccess();
-    console.log("onSuccess callback executed."); // Add this
+    console.log("onSuccess callback executed.");
   };
 
   const handleEdit = async (e: React.FormEvent) => {
@@ -81,7 +83,7 @@ export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
 
       Swal.fire({
         title: "Success",
-        text: "Anime berhasil ditambahkan!",
+        text: "Anime berhasil Diperbarui!",
         icon: "success",
       }).then((result) => {
         if (result.isConfirmed) {
@@ -104,10 +106,54 @@ export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "skor") {
+      let cleaned = value.replace(/[^0-9.]/g, "");
+
+      if (cleaned.length > 10) {
+        cleaned = cleaned.slice(0, 10);
+      }
+
+      const numeric = parseFloat(cleaned);
+      if (numeric > 10) {
+        setSkorError("Skor maksimal 10!");
+        return;
+      } else {
+        setSkorError("");
+      }
+
       setFormData({
         ...formData,
         [name]: value === "" ? 0 : parseFloat(value),
       });
+    } else if (name === "img_url") {
+      try {
+        const parsed = new URL(value);
+
+        if (parsed.hostname !== "4kwallpapers.com") {
+          setUrlError("URL hanya boleh domain 4kwallpapers.com!");
+          console.log("hostname:", parsed.hostname);
+
+          return;
+        } else {
+          setUrlError("");
+        }
+
+        if (!parsed.pathname.endsWith(".jpg")) {
+          setUrlError("URL harus file .jpg!");
+          console.log("pathname:", parsed.pathname);
+
+          return;
+        } else {
+          setUrlError("");
+        }
+      } catch {
+        setUrlError("Format URL tidak valid");
+      }
+
+      setFormData({ ...formData, [name]: value });
+      if (value.trim() === "") {
+        setUrlError("URL tidak boleh kosong");
+        return;
+      }
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -211,9 +257,6 @@ export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
             </div>
             <div className="grid gap-3">
               <Label htmlFor="skor">Skor {"(1-10)"}</Label>
-              <p className="text-sm text-zinc-600">
-                Jika lebih dari 10 maka gagal *
-              </p>
               <Input
                 id="skor"
                 name="skor"
@@ -221,6 +264,7 @@ export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
                 value={formData.skor}
                 onChange={handleChange}
               />
+              {skorError && <p className="text-red-500 text-sm">{skorError}</p>}
             </div>
             <div className="grid gap-3">
               <Label htmlFor="genre">Genre</Label>
@@ -258,6 +302,7 @@ export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
                 value={formData.img_url}
                 onChange={handleChange}
               />
+              {urlError && <p className="text-red-500 text-sm">{urlError}</p>}
             </div>
           </div>
           <DialogFooter>

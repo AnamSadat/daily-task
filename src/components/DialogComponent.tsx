@@ -35,14 +35,60 @@ export default function DialogComponents({
     genre: "",
     img_url: "",
   });
+  const [urlError, setUrlError] = useState("");
+  const [skorError, setSkorError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "skor") {
+      let cleaned = value.replace(/[^0-9.]/g, "");
+
+      if (cleaned.length > 10) {
+        cleaned = cleaned.slice(0, 10);
+      }
+
+      const numeric = parseFloat(cleaned);
+      if (numeric > 10) {
+        setSkorError("Skor maksimal 10!");
+        return;
+      } else {
+        setSkorError("");
+      }
+
       setFormData({
         ...formData,
         [name]: value === "" ? 0 : parseFloat(value),
       });
+    } else if (name === "img_url") {
+      try {
+        const parsed = new URL(value);
+
+        if (parsed.hostname !== "4kwallpapers.com") {
+          setUrlError("URL hanya boleh domain 4kwallpapers.com!");
+          console.log("hostname:", parsed.hostname);
+
+          return;
+        } else {
+          setUrlError("");
+        }
+
+        if (!parsed.pathname.endsWith(".jpg")) {
+          setUrlError("URL harus file .jpg!");
+          console.log("pathname:", parsed.pathname);
+
+          return;
+        } else {
+          setUrlError("");
+        }
+      } catch {
+        setUrlError("Format URL tidak valid");
+      }
+
+      setFormData({ ...formData, [name]: value });
+      if (value.trim() === "") {
+        setUrlError("URL tidak boleh kosong");
+        return;
+      }
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -134,6 +180,7 @@ export default function DialogComponents({
                 value={formData.skor}
                 onChange={handleChange}
               />
+              {skorError && <p className="text-red-500 text-sm">{skorError}</p>}
             </div>
             <div className="grid gap-3">
               <Label htmlFor="genre">Genre</Label>
@@ -173,6 +220,7 @@ export default function DialogComponents({
                 value={formData.img_url}
                 onChange={handleChange}
               />
+              {urlError && <p className="text-red-500 text-sm">{urlError}</p>}
             </div>
           </div>
           <DialogFooter>

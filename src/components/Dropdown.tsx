@@ -87,7 +87,7 @@ export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
         icon: "success",
       }).then((result) => {
         if (result.isConfirmed) {
-          onSuccess(); // PANGGIL FETCH DI SINI!
+          onSuccess();
         }
       });
     } catch (error) {
@@ -229,7 +229,9 @@ export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
         <DialogContent className="sm:max-w-[625px] max-h-[645px] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Edit Item</DialogTitle>
+            <DialogTitle className="text-xl font-semibold">
+              Edit Item
+            </DialogTitle>
             <DialogDescription>
               Modify your item details here. Click save when done.
             </DialogDescription>

@@ -19,7 +19,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { NewAnimeInput } from "@/type/type";
-import { postNewAnime } from "@/lib/api";
+import { postAnimeDB } from "@/lib/apiPrisma";
 import Swal from "sweetalert2";
 import { HoverCard } from "./ui/hover-card";
 
@@ -97,7 +97,7 @@ export default function DialogComponents({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await postNewAnime(formData);
+      const res = await postAnimeDB(formData);
       console.log("Sukses tambah anime: ", res);
 
       setFormData({

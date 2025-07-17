@@ -43,7 +43,7 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import Link from "next/link";
 import Image from "next/image";
-import { deleteNewAnime, putNewAnime } from "@/lib/api";
+import { deleteAnimeDB, putAnimeDB } from "@/lib/apiPrisma";
 import { DropdownProps, NewAnime } from "@/type/type";
 import Swal from "sweetalert2";
 
@@ -66,7 +66,7 @@ export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
   const handleDelete = async () => {
     setIsDelete(true);
     console.log("Deleting anime with ID:", id);
-    await deleteNewAnime(id);
+    await deleteAnimeDB(id);
     console.log("Anime deleted successfully.");
     setIsDelete(false);
     setDeleteOpen(false);
@@ -78,7 +78,7 @@ export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {
   const handleEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await putNewAnime(formData);
+      const res = await putAnimeDB(formData);
       console.log("Sukses tambah anime: ", res);
 
       Swal.fire({

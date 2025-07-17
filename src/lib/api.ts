@@ -1,6 +1,5 @@
 import { NewAnime, NewAnimeInput } from "@/type/type"
 
-
 // fetching anime list
 
 export async function getAnimeList() {
@@ -15,7 +14,7 @@ export async function getAnimeDetail(id: string) {
   return data
 }
 
-// fetching endpoint /api/anime-v1
+// fetching endpoint /api/anime-favorite
 
 const BASE_URL_ENDPOINT = '/api/anime-favorite'
 

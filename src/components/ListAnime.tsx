@@ -27,7 +27,7 @@ export default function ListAnime({
           {Array.from({ length: 5 }).map((_, index) => (
             <Skeleton
               key={index}
-              className="w-full h-60 rounded-lg bg-slate-200"
+              className="w-full h-80 rounded-lg bg-slate-200"
             />
           ))}
         </div>

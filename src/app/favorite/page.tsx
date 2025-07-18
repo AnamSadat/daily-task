@@ -3,7 +3,7 @@
 import DialogComponents from "@/components/DialogComponent";
 import ListAnime from "@/components/ListAnime";
 import { useState, useEffect } from "react";
-import { getNewAnime } from "@/lib/api";
+import { getAnimeDB } from "@/lib/apiPrisma";
 import { NewAnime } from "@/type/type";
 
 // TODO: CRUD anime page
@@ -16,7 +16,7 @@ export default function AddAnime() {
   const fetchAnime = async () => {
     setLoading(true); // <--- Tambahkan ini di awal
     try {
-      const data: NewAnime[] = await getNewAnime();
+      const data: NewAnime[] = await getAnimeDB();
       console.log("Data berhasil diambil setelah pembaruan/penghapusan:", data); // Verifikasi data
       setAnimeState(data);
     } catch (error) {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { anime } from "@/lib/data"
-import { NewAnime, NewAnimeSchema } from "@/type/type"
+import { NewAnime, NewAnimeSchema } from "@/types/type"
 
 // TODO: api anime
 

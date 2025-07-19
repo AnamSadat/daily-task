@@ -1,4 +1,4 @@
-import type { AnimeDetailProps } from "@/type/type";
+import type { AnimeDetailProps } from "@/types/type";
 import { getAnimeDetail } from "@/lib/api";
 import Image from "next/image";
 import { notFound } from "next/navigation";

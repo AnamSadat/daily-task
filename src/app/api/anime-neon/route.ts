@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 // import { NewAnimeSchema } from "@/type/type"
 import Prisma from "@/lib/prisma";
-import { NewAnimeSchema } from "@/type/type";
+import { NewAnimeSchema } from "@/types/type";
 
 export async function GET() {
   try {

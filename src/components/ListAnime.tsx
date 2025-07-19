@@ -2,9 +2,7 @@
 
 import { Card } from "@/components/ui/card";
 import CardListAnime from "./CardListAnime";
-// import { useEffect, useState } from "react";
-// import { getNewAnime } from "@/lib/api";
-import { NewAnime } from "@/type/type";
+import { NewAnime } from "@/types/type";
 import { Skeleton } from "./ui/skeleton";
 
 // TODO: List Anime

@@ -1,4 +1,4 @@
-import { NewAnime, NewAnimeInput } from "@/type/type"
+import { NewAnime, NewAnimeInput } from "@/types/type"
 
 // fetching anime list
 

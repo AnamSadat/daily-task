@@ -20,10 +20,17 @@ export type DropdownProps = {
 export type AnimeFormState = {
   nama: string;
   status: string;
-  skor: string;  // <== string!
+  skor: string;
   genre: string;
   img_url: string;
 };
+
+export type NewFavoriteSlice = {
+  items: NewAnime[],
+  loading: boolean,
+  error: string | null
+}
+
 
 // types/anime.ts
 export type Anime = {

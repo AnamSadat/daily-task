@@ -1,4 +1,4 @@
-import { NewAnime } from "@/type/type";
+import { NewAnime } from "@/types/type";
 
 export const anime: NewAnime[] = [
   {

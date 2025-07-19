@@ -1,4 +1,4 @@
-import { NewAnime, NewAnimeInput, } from "@/type/type"
+import { NewAnime, NewAnimeInput, } from "@/types/type"
 import axios, { AxiosError, AxiosRequestConfig } from 'axios'
 
 const BASE_URL_ENDPOINT = '/api/anime-neon'

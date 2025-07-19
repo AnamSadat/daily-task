@@ -2,34 +2,20 @@
 
 import DialogComponents from "@/components/DialogComponent";
 import ListAnime from "@/components/ListAnime";
-import { useState, useEffect } from "react";
-import { getAnimeDB } from "@/lib/apiPrisma";
-import { NewAnime } from "@/type/type";
-
-// TODO: CRUD anime page
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/lib/store";
+import { fetchFavoriteAnime } from "@/lib/story/favoriteAnime";
 
 export default function AddAnime() {
-  const [anime, setAnimeState] = useState<NewAnime[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  // AddAnime.tsx
-  const fetchAnime = async () => {
-    setLoading(true); // <--- Tambahkan ini di awal
-    try {
-      const data: NewAnime[] = await getAnimeDB();
-      console.log("Data berhasil diambil setelah pembaruan/penghapusan:", data); // Verifikasi data
-      setAnimeState(data);
-    } catch (error) {
-      console.error("Kesalahan saat mengambil data anime:", error);
-      // Penting: Tangani error di UI, mungkin tampilkan pesan error
-    } finally {
-      setLoading(false); // <--- Pastikan loading selalu diatur ke false, terlepas dari sukses/gagal
-    }
-  };
+  const dispatch = useDispatch<AppDispatch>();
+  const { items: anime, loading } = useSelector(
+    (state: RootState) => state.favorite
+  );
 
   useEffect(() => {
-    fetchAnime();
-  }, []);
+    dispatch(fetchFavoriteAnime());
+  }, [dispatch]);
 
   return (
     <div className="container mx-auto mt-30">
@@ -42,11 +28,15 @@ export default function AddAnime() {
           mudah.
         </p>
         <div>
-          <DialogComponents onSuccess={fetchAnime} />
+          <DialogComponents onSuccess={() => dispatch(fetchFavoriteAnime())} />
         </div>
       </div>
       <div className="mt-20">
-        <ListAnime loading={loading} anime={anime} onSuccess={fetchAnime} />
+        <ListAnime
+          loading={loading}
+          anime={anime}
+          onSuccess={() => dispatch(fetchFavoriteAnime())}
+        />
       </div>
     </div>
   );

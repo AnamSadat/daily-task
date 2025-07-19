@@ -1,6 +1,6 @@
 import AnimeCard from "@/components/Card";
 import { getAnimeList } from "@/lib/api";
-import type { Anime } from "@/type/type";
+import type { Anime } from "@/types/type";
 
 export default async function Story() {
   const animeList: Anime[] = await getAnimeList();

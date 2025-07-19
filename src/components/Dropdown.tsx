@@ -44,7 +44,7 @@ import { Input } from "./ui/input";
 import Link from "next/link";
 import Image from "next/image";
 import { deleteAnimeDB, putAnimeDB } from "@/lib/apiPrisma";
-import { DropdownProps, NewAnime } from "@/type/type";
+import { DropdownProps, NewAnime } from "@/types/type";
 import Swal from "sweetalert2";
 
 export function DropdownMenuDemo({ id, onSuccess, anime }: DropdownProps) {

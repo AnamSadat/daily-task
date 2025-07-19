@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { NewAnimeInput } from "@/type/type";
+import { NewAnimeInput } from "@/types/type";
 import { postAnimeDB } from "@/lib/apiPrisma";
 import Swal from "sweetalert2";
 import { HoverCard } from "./ui/hover-card";
